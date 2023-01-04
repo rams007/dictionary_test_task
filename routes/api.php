@@ -15,9 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('words', \App\Http\Controllers\WordController::class)->only([
-    'index', 'store', 'show','destroy'
+    'index', 'show', 'destroy'
 ]);
 
 Route::resource('dictionaries', \App\Http\Controllers\DictionaryController::class)->only([
-    'index', 'store', 'show','destroy'
+    'index', 'store', 'show', 'destroy'
 ]);
+
+Route::resource('words', \App\Http\Controllers\WordController::class)->only([
+    'store'
+])->middleware('checkMaximumWordsInDictionary');
+

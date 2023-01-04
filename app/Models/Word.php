@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Word extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['dictionary_id', 'word'];
+
+    public function dictionary()
+    {
+        return $this->belongsTo(Dictionary::class);
+    }
 }
