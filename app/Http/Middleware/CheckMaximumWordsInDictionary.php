@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Events\MaximumWordsInDictionaryReached;
 use App\Mail\SendMaximumWordsInDictionaryEmail;
 use Closure;
 use Illuminate\Http\JsonResponse;
@@ -33,12 +34,8 @@ class CheckMaximumWordsInDictionary
         $countWordsInDictionary = $dictionaryResults[0]->totalWords;
 
         if ($countWordsInDictionary > 100) {
-            try {
-                Mail::to(env('ADMIN_EMAIL'))->send(new SendMaximumWordsInDictionaryEmail($request->input('dictionary_id')));
-            } catch (Throwable $e) {
-                Log::error('Error sending email ' . $e->getMessage());
-            }
 
+            MaximumWordsInDictionaryReached::dispatch($request->input('dictionary_id'));
             return response()->json(['error' => true, 'msg' => 'Maximum allowed word per dictionary']);
         }
 

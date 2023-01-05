@@ -17,7 +17,7 @@ class DictionaryController extends Controller
     public function index(): JsonResponse
     {
         $dictionaries = Dictionary::orderBy('name', 'ASC')->select(['name', 'id'])->paginate(10);
-        return response()->json(['error' => false, 'data' => $dictionaries]);
+        return $this->successApiResponse($dictionaries);
     }
 
 
@@ -30,8 +30,7 @@ class DictionaryController extends Controller
     public function store(CreateDictionaryRequest $request): JsonResponse
     {
         Dictionary::create(['name' => $request->input('name')]);
-        return response()->json(['error' => false, 'msg' => 'Created']);
-
+        return $this->successApiResponse(['msg' => 'Created']);
     }
 
     /**
@@ -43,6 +42,6 @@ class DictionaryController extends Controller
     public function destroy(Dictionary $dictionary): JsonResponse
     {
         $dictionary->delete();
-        return response()->json(['error' => false, 'msg' => 'Deleted']);
+        return $this->successApiResponse(['msg' => 'Deleted']);
     }
 }

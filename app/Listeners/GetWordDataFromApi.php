@@ -28,6 +28,5 @@ class GetWordDataFromApi implements ShouldQueue
     public function handle(NewWordAdded $event)
     {
         DictionaryAPIService::getWordData($event->word);
-
     }
 }

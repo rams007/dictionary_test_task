@@ -18,7 +18,7 @@ class WordController extends Controller
     public function index()
     {
         $words = Word::with('dictionary:name,id')->orderBy('word', 'ASC')->paginate(20);
-        return response()->json(['error' => false, 'data' => $words]);
+        return $this->successApiResponse($words);
     }
 
 
@@ -31,9 +31,8 @@ class WordController extends Controller
     public function store(CreateWordRequest $request): JsonResponse
     {
         Word::create(['dictionary_id' => $request->input('dictionary_id'), 'word' => $request->input('word')]);
-
         NewWordAdded::dispatch($request->input('word'));
-        return response()->json(['error' => false, 'msg' => 'Created']);
+        return $this->successApiResponse(['msg' => 'Created']);
     }
 
 
@@ -46,6 +45,6 @@ class WordController extends Controller
     public function destroy(Word $word): JsonResponse
     {
         $word->delete();
-        return response()->json(['error' => false, 'msg' => 'Deleted']);
+        return $this->successApiResponse(['msg' => 'Deleted']);
     }
 }
