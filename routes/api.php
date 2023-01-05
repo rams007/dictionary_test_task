@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('words', \App\Http\Controllers\WordController::class)->only([
-    'index', 'show', 'destroy'
+    'index', 'destroy'
 ]);
 
 Route::resource('dictionaries', \App\Http\Controllers\DictionaryController::class)->only([
-    'index', 'store', 'show', 'destroy'
+    'index', 'store', 'destroy'
 ]);
 
 Route::resource('words', \App\Http\Controllers\WordController::class)->only([

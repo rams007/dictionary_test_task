@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateDictionaryRequest;
 use App\Models\Dictionary;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+
 
 class DictionaryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $dictionaries = Dictionary::orderBy('name', 'ASC')->select(['name', 'id'])->paginate(10);
         return response()->json(['error' => false, 'data' => $dictionaries]);
@@ -23,10 +24,10 @@ class DictionaryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param CreateDictionaryRequest $request
+     * @return JsonResponse
      */
-    public function store(CreateDictionaryRequest $request)
+    public function store(CreateDictionaryRequest $request): JsonResponse
     {
         Dictionary::create(['name' => $request->input('name')]);
         return response()->json(['error' => false, 'msg' => 'Created']);
@@ -34,24 +35,12 @@ class DictionaryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-
-    /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Dictionary $dictionary
+     * @return JsonResponse
      */
-    public function destroy(Dictionary $dictionary)
+    public function destroy(Dictionary $dictionary): JsonResponse
     {
         $dictionary->delete();
         return response()->json(['error' => false, 'msg' => 'Deleted']);

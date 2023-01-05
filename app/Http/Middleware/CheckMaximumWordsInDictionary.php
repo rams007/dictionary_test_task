@@ -16,7 +16,7 @@ use Throwable;
 class CheckMaximumWordsInDictionary
 {
     /**
-     * Handle an incoming request.
+     * Check limitation on 100 words per dictionary
      *
      * @param Request $request
      * @param Closure(Request): (Response|RedirectResponse) $next

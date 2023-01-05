@@ -18,7 +18,6 @@ class CreateWordsTable extends Migration
             $table->unsignedBigInteger('dictionary_id');
             $table->string('word');
             $table->text('api_response')->nullable();
-            $table->unsignedTinyInteger('count_response_attempts')->default(0);
             $table->foreign('dictionary_id')->references('id')->on('dictionaries');
             $table->timestamps();
         });
